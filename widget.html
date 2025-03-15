@@ -1,0 +1,43 @@
+<div id="chat-widget" style="width:300px; border:1px solid #ccc; padding:10px;">
+    <div id="chat-log" style="height:200px; overflow-y:auto; border-bottom:1px solid #ccc; padding-bottom:10px;"></div>
+    <input type="text" id="chat-input" placeholder="Ask me anything..." style="width:100%; padding:5px; margin-top:10px;" />
+    <button id="chat-send" style="width:100%; padding:5px; margin-top:5px;">Send</button>
+  </div>
+  
+  <script>
+    const chatLog = document.getElementById('chat-log');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+  
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.innerHTML = '<strong>' + sender + ':</strong> ' + text;
+      chatLog.appendChild(msgDiv);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  
+    async function sendMessage() {
+      const query = chatInput.value.trim();
+      if (!query) return;
+      addMessage('User', query);
+      chatInput.value = '';
+  
+      try {
+        const response = await fetch('https://your-netlify-site.netlify.app/.netlify/functions/query-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_query: query })
+        });
+        const data = await response.json();
+        addMessage('AI', data.aiReply || 'No reply received.');
+      } catch (error) {
+        addMessage('AI', 'Error: ' + error.message);
+      }
+    }
+  
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+  
