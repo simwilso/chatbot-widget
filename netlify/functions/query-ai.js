@@ -113,8 +113,10 @@ exports.handler = async (event, context) => {
     const topChunks = similarities.slice(0, 3).map(item => item.chunk).join("\n\n");
     
     // Build the system prompt using only the top relevant chunks
-    const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
-    
+    //const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
+    // For testing, use a simplified system prompt:
+    const systemPrompt = "Virtual AI Officer (VAIO) is an AI-driven business providing AI strategy consulting, automation tools, education, and AI-driven solutions. Answer the following question concisely.";
+
     // Build payload for Anthropic's Messages API
     const payload = {
       model: "claude-3-7-sonnet-20250219",
