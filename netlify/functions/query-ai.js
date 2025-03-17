@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch'); // If using Node < 18; for Node 18+, fetch is built-in
+const fetch = require('node-fetch'); // For Node < 18; if Node 18+ remove this line
 
 // Load the knowledge base from your repository root
 let knowledgeBase = '';
@@ -17,6 +17,7 @@ exports.handler = async (event, context) => {
     if (!userQuery) {
       return {
         statusCode: 400,
+        headers: { 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ error: "Missing 'user_query'" })
       };
     }
@@ -24,7 +25,7 @@ exports.handler = async (event, context) => {
     // Build the prompt using your knowledge base content
     const prompt = `Below is some information about Virtual AI Officer:\n\n${knowledgeBase}\n\nBased solely on the above information, answer the following question concisely:\n\nHuman: ${userQuery}\n\nAssistant:`;
 
-    // Prepare the request for Anthropic's Claude API (or another inference provider)
+    // Call Anthropic's Claude API (or your chosen inference provider)
     const response = await fetch('https://api.anthropic.com/v1/complete', {
       method: 'POST',
       headers: {
@@ -43,6 +44,7 @@ exports.handler = async (event, context) => {
       const errorText = await response.text();
       return {
         statusCode: response.status,
+        headers: { 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ error: errorText })
       };
     }
@@ -52,6 +54,10 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: JSON.stringify({ aiReply: completion })
     };
 
@@ -59,6 +65,7 @@ exports.handler = async (event, context) => {
     console.error('Error in function:', err);
     return {
       statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: err.toString() })
     };
   }
