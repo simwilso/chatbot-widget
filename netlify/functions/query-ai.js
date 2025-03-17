@@ -22,29 +22,28 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Build messages for the Anthropic Messages API
-    const messages = [
-      {
-        role: "system",
-        content: `Below is some information about Virtual AI Officer: ${knowledgeBase}. Based solely on the above information, answer the following question concisely.`
-      },
-      {
-        role: "user",
-        content: userQuery
-      }
-    ];
+    // Build a top-level system prompt from the knowledge base
+    const systemPrompt = `Below is some information about Virtual AI Officer: ${knowledgeBase}. Based solely on the above information, answer the following question concisely.`;
 
-    // Build the payload without the temperature parameter
+    // Build the payload using the Messages API format:
+    // - Provide the system prompt as a top-level 'system' parameter.
+    // - Provide the user's message in the messages array.
     const payload = {
       model: "claude-3-7-sonnet-20250219",
       max_tokens: 1024,
-      messages: messages
+      temperature: 0.3,
+      system: systemPrompt,
+      messages: [
+         {
+           role: "user",
+           content: userQuery
+         }
+      ]
     };
 
-    // Log the payload for debugging purposes
     console.log("Payload:", JSON.stringify(payload));
 
-    // Call Anthropic's Messages API
+    // Call Anthropic's Messages API endpoint
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
