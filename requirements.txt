@@ -1,2 +1,2 @@
-smolagent
+git@github.com:huggingface/smolagents.git
 requests
