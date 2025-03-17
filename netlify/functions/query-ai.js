@@ -30,7 +30,7 @@ exports.handler = async (event, context) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Anthropic-API-Key': process.env.ANTHROPIC_API_KEY
+        'anthropic-api-key': process.env.ANTHROPIC_API_KEY
       },
       body: JSON.stringify({
         prompt: prompt,
