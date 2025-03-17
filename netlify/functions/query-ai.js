@@ -3,7 +3,6 @@ const path = require('path');
 const fetch = require('node-fetch'); // For Node < 18; for Node 18+ fetch is built in
 
 // Load precomputed knowledge base chunks (via RAG)
-// Read the full knowledge base
 let knowledgeBase = '';
 try {
   knowledgeBase = fs.readFileSync(path.join(__dirname, '../../knowledgebase.md'), 'utf8');
@@ -28,7 +27,7 @@ function vectorize(tokens) {
   return freq;
 }
 
-// Cosine similarity between two frequency vectors.
+// Compute cosine similarity between two frequency vectors.
 function cosineSimilarity(vecA, vecB) {
   let dot = 0, normA = 0, normB = 0;
   for (const key in vecA) {
@@ -80,13 +79,12 @@ exports.handler = async (event, context) => {
       return { chunk, sim: cosineSimilarity(queryVector, chunkVectors[idx]) };
     });
     similarities.sort((a, b) => b.sim - a.sim);
-    const topChunks = similarities.slice(0, 2).map(item => item.chunk.substring(0, 300) + (item.chunk.length > 300 ? "..." : "")).join("\n\n");
+    const topChunks = similarities.slice(0, 2)
+      .map(item => item.chunk.substring(0, 300) + (item.chunk.length > 300 ? "..." : ""))
+      .join("\n\n");
     
-    // For troubleshooting, you can toggle between the RAG prompt and a simple prompt:
-    const useRAG = true; // Set false for testing with a simple prompt
-    const systemPrompt = useRAG
-      ? `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`
-      : "Virtual AI Officer (VAIO) is an AI-driven business providing AI strategy consulting, automation tools, education, and AI-driven solutions. Answer the following question concisely.";
+    // Build the system prompt using the top relevant chunks
+    const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
     
     const payload = {
       model: "claude-3-7-sonnet-20250219",
@@ -103,7 +101,7 @@ exports.handler = async (event, context) => {
     
     console.log("Payload:", JSON.stringify(payload));
     
-    // Call Anthropic's Messages API
+    // Call Anthropic's Messages API endpoint
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -126,9 +124,11 @@ exports.handler = async (event, context) => {
     }
     
     const data = JSON.parse(responseText);
-    console.log("Parsed API response:", JSON.stringify(data));
-    
-    const completion = data.completion || '';
+    // Extract text from the "content" array if available.
+    let completion = "";
+    if (data.content && Array.isArray(data.content)) {
+      completion = data.content.map(item => item.text).join(" ");
+    }
     
     return {
       statusCode: 200,
@@ -148,4 +148,3 @@ exports.handler = async (event, context) => {
     };
   }
 };
-
