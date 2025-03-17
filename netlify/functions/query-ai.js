@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch'); // For Node < 18; if Node 18+ remove this line
+const fetch = require('node-fetch'); // For Node < 18; for Node 18+ fetch is built in
 
 // Load the knowledge base from your repository root
 let knowledgeBase = '';
@@ -22,21 +22,31 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Build the prompt using your knowledge base content
-    const prompt = `Below is some information about Virtual AI Officer:\n\n${knowledgeBase}\n\nBased solely on the above information, answer the following question concisely:\n\nHuman: ${userQuery}\n\nAssistant:`;
+    // Build messages for the Anthropic Messages API
+    const messages = [
+      {
+        role: "system",
+        content: `Below is some information about Virtual AI Officer:\n\n${knowledgeBase}\n\nBased solely on the above information, answer the following question concisely.`
+      },
+      {
+        role: "user",
+        content: userQuery
+      }
+    ];
 
-    // Call Anthropic's Claude API (or your chosen inference provider)
-    const response = await fetch('https://api.anthropic.com/v1/complete', {
+    // Call Anthropic's Messages API
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Anthropic-API-Key': process.env.ANTHROPIC_API_KEY
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        prompt: prompt,
-        model: "claude-3-5-sonnet-20240620",             // Adjust model if needed
-        max_tokens_to_sample: 300,       // Adjust token limit as required
-        temperature: 0.3                 // Lower temperature for more deterministic responses
+        model: "claude-3-7-sonnet-20250219",
+        max_tokens: 1024,
+        temperature: 0.3,
+        messages: messages
       })
     });
 
