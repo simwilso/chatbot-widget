@@ -2,16 +2,24 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch'); // For Node < 18; for Node 18+ fetch is built in
 
-// -------------------------
-// Helper Functions
-// -------------------------
+// Load precomputed knowledge base chunks (via RAG)
+// Read the full knowledge base
+let knowledgeBase = '';
+try {
+  knowledgeBase = fs.readFileSync(path.join(__dirname, '../../knowledgebase.md'), 'utf8');
+} catch (error) {
+  console.error('Error loading knowledge base:', error);
+}
 
-// Simple tokenization: convert to lowercase and split by word boundaries.
+// Split the knowledge base into chunks (using double newlines as delimiters)
+const chunks = knowledgeBase.split(/\n\s*\n/).filter(chunk => chunk.trim() !== '');
+
+// Simple tokenization: lower case and split by word boundaries.
 function tokenize(text) {
   return text.toLowerCase().match(/\w+/g) || [];
 }
 
-// Build a frequency dictionary from an array of tokens.
+// Build a frequency vector for tokens
 function vectorize(tokens) {
   const freq = {};
   tokens.forEach(token => {
@@ -20,61 +28,27 @@ function vectorize(tokens) {
   return freq;
 }
 
-// Compute dot product of two frequency dictionaries.
-function dotProduct(vecA, vecB) {
-  let dot = 0;
+// Cosine similarity between two frequency vectors.
+function cosineSimilarity(vecA, vecB) {
+  let dot = 0, normA = 0, normB = 0;
   for (const key in vecA) {
     if (vecB[key]) {
       dot += vecA[key] * vecB[key];
     }
+    normA += vecA[key] * vecA[key];
   }
-  return dot;
-}
-
-// Compute Euclidean norm of a vector.
-function norm(vec) {
-  let sumSq = 0;
-  for (const key in vec) {
-    sumSq += vec[key] * vec[key];
+  for (const key in vecB) {
+    normB += vecB[key] * vecB[key];
   }
-  return Math.sqrt(sumSq);
-}
-
-// Compute cosine similarity between two vectors.
-function cosineSimilarity(vecA, vecB) {
-  const dot = dotProduct(vecA, vecB);
-  const normA = norm(vecA);
-  const normB = norm(vecB);
   if (normA === 0 || normB === 0) return 0;
-  return dot / (normA * normB);
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
-// -------------------------
-// Load & Preprocess Knowledge Base
-// -------------------------
-
-let knowledgeBase = '';
-try {
-  knowledgeBase = fs.readFileSync(path.join(__dirname, '../../knowledgebase.md'), 'utf8');
-} catch (error) {
-  console.error('Error loading knowledge base:', error);
-}
-
-// Split the knowledge base into chunks (using double newline as delimiter)
-const chunks = knowledgeBase.split(/\n\s*\n/).filter(chunk => chunk.trim() !== '');
-
-// Compute a frequency vector for each chunk once (at cold start)
-const chunkVectors = chunks.map(chunk => {
-  const tokens = tokenize(chunk);
-  return vectorize(tokens);
-});
-
-// -------------------------
-// Netlify Function Handler
-// -------------------------
+// Precompute frequency vectors for each chunk (RAG setup)
+const chunkVectors = chunks.map(chunk => vectorize(tokenize(chunk)));
 
 exports.handler = async (event, context) => {
-  // Handle CORS preflight requests
+  // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -98,26 +72,22 @@ exports.handler = async (event, context) => {
       };
     }
     
-    // Tokenize and vectorize the user query
-    const queryTokens = tokenize(userQuery);
-    const queryVector = vectorize(queryTokens);
+    // Compute the query vector
+    const queryVector = vectorize(tokenize(userQuery));
     
-    // Compute cosine similarity for each chunk
-    const similarities = chunks.map((chunk, index) => {
-      const sim = cosineSimilarity(queryVector, chunkVectors[index]);
-      return { chunk, sim };
+    // Compute cosine similarity for each chunk and select top 2 chunks
+    let similarities = chunks.map((chunk, idx) => {
+      return { chunk, sim: cosineSimilarity(queryVector, chunkVectors[idx]) };
     });
-    
-    // Sort chunks by similarity (highest first) and select top 3
     similarities.sort((a, b) => b.sim - a.sim);
-    const topChunks = similarities.slice(0, 3).map(item => item.chunk).join("\n\n");
+    const topChunks = similarities.slice(0, 2).map(item => item.chunk.substring(0, 300) + (item.chunk.length > 300 ? "..." : "")).join("\n\n");
     
-    // Build the system prompt using only the top relevant chunks
-    //const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
-    // For testing, use a simplified system prompt:
-    const systemPrompt = "Virtual AI Officer (VAIO) is an AI-driven business providing AI strategy consulting, automation tools, education, and AI-driven solutions. Answer the following question concisely.";
-
-    // Build payload for Anthropic's Messages API
+    // For troubleshooting, you can toggle between the RAG prompt and a simple prompt:
+    const useRAG = true; // Set false for testing with a simple prompt
+    const systemPrompt = useRAG
+      ? `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`
+      : "Virtual AI Officer (VAIO) is an AI-driven business providing AI strategy consulting, automation tools, education, and AI-driven solutions. Answer the following question concisely.";
+    
     const payload = {
       model: "claude-3-7-sonnet-20250219",
       max_tokens: 1024,
@@ -144,17 +114,20 @@ exports.handler = async (event, context) => {
       body: JSON.stringify(payload)
     });
     
+    const responseText = await response.text();
+    console.log("Raw API response:", responseText);
+    
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("API error response:", errorText);
       return {
         statusCode: response.status,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ error: errorText })
+        body: JSON.stringify({ error: responseText })
       };
     }
     
-    const data = await response.json();
+    const data = JSON.parse(responseText);
+    console.log("Parsed API response:", JSON.stringify(data));
+    
     const completion = data.completion || '';
     
     return {
