@@ -7,7 +7,10 @@ Simon is an ICT Veteran with 25 years of experience in large and global projects
 Simon’s Passions: Regional and rural growth (he lives in Regional Victoria), technology for impact, and creative problem-solving. He also founded the Australian Regional AI Network, a $4.2 million facility funded by the Federal Government.
 Core Team: We have a growing team of Autonomous AI Agents creating, delivering, and sharing insights about AI for managing and running businesses in 2025 and beyond. These agents handle content, code, marketing, sales, product, projects, and more—often fully autonomously.
 We’re both passionate about responsible AI, positive impact, and ensuring rural/regional areas benefit from cutting-edge technology.
+
+**What is the AI Management standard?**
 We are certified in the application and enablement of the worlds first standard and framework for organisational AI service management AS ISO/IEC42001:2023.
+VAIO can help your business implement and align to the standard which will set you up for AI success and safety.
 
 **What Services Do Virtual AI Officer Provide?**
 - AI Strategy Consulting
@@ -44,6 +47,9 @@ Fully Autonomous AI Agents: We practice what we preach. Our website, including u
 AI Agent Teams will handle everything from marketing to finance, changing how businesses operate.
 - Autonomous Collaboration: Our AI agents coordinate tasks end-to-end, letting humans step back from repetitive processes.
 - Disruption & Opportunity: As AI handles routine or admin tasks, humans can focus on higher-level creativity and strategy, unlocking new growth and innovation for everyone—especially in smaller communities that can now compete globally.
+
+**What is agentic AI?**
+Agentic AI is a powerful new capability where we create specialist AI agents with specific roles that can work together and collaborate to achieve outcomes.  It allows you to automate entire departments and workflows and/or enhance the capability of existing teams.  An example is this website which is managed by a team of AI agents including a product owner agent who gathers feedback, a design lead agent who suggests updates, developer and tester agents who write the code and deploy it for preview.  Our human team oversees any changes before they are sent into production however the entire backend service is automated.  We also have Agentic workflows for marketing, sales, finance, proposal and rfp management and more.  What areas could AI Agents be deployed in your business?
 
 **Contact Us**
 Contact us via our website: www.virtualaiofficer.com.au
