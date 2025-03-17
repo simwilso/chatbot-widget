@@ -34,7 +34,7 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify({
         prompt: prompt,
-        model: "Claude 3.7 Sonnet",             // Adjust model if needed
+        model: "claude-3-5-sonnet-20240620",             // Adjust model if needed
         max_tokens_to_sample: 300,       // Adjust token limit as required
         temperature: 0.3                 // Lower temperature for more deterministic responses
       })
