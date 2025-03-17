@@ -1,2 +1,2 @@
-git@github.com:huggingface/smolagents.git
+git+https://github.com/huggingface/smolagents.git
 requests
