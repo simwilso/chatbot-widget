@@ -11,6 +11,19 @@ try {
 }
 
 exports.handler = async (event, context) => {
+  // Handle CORS preflight request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, x-api-key, anthropic-version'
+      },
+      body: ''
+    };
+  }
+  
   try {
     const body = JSON.parse(event.body || '{}');
     const userQuery = body.user_query?.trim() || '';
@@ -25,9 +38,7 @@ exports.handler = async (event, context) => {
     // Build a top-level system prompt from the knowledge base
     const systemPrompt = `Below is some information about Virtual AI Officer: ${knowledgeBase}. Based solely on the above information, answer the following question concisely.`;
 
-    // Build the payload using the Messages API format:
-    // - Provide the system prompt as a top-level 'system' parameter.
-    // - Provide the user's message in the messages array.
+    // Build the payload using the Messages API format
     const payload = {
       model: "claude-3-7-sonnet-20250219",
       max_tokens: 1024,
