@@ -26,13 +26,23 @@ exports.handler = async (event, context) => {
     const messages = [
       {
         role: "system",
-        content: `Below is some information about Virtual AI Officer:\n\n${knowledgeBase}\n\nBased solely on the above information, answer the following question concisely.`
+        content: `Below is some information about Virtual AI Officer: ${knowledgeBase}. Based solely on the above information, answer the following question concisely.`
       },
       {
         role: "user",
         content: userQuery
       }
     ];
+
+    // Build the payload without the temperature parameter
+    const payload = {
+      model: "claude-3-7-sonnet-20250219",
+      max_tokens: 1024,
+      messages: messages
+    };
+
+    // Log the payload for debugging purposes
+    console.log("Payload:", JSON.stringify(payload));
 
     // Call Anthropic's Messages API
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -42,16 +52,12 @@ exports.handler = async (event, context) => {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: "claude-3-7-sonnet-20250219",
-        max_tokens: 1024,
-        temperature: 0.3,
-        messages: messages
-      })
+      body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error("API error response:", errorText);
       return {
         statusCode: response.status,
         headers: { 'Access-Control-Allow-Origin': '*' },
