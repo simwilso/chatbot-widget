@@ -30,11 +30,11 @@ exports.handler = async (event, context) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'anthropic-api-key': process.env.ANTHROPIC_API_KEY
+        'Anthropic-API-Key': process.env.ANTHROPIC_API_KEY
       },
       body: JSON.stringify({
         prompt: prompt,
-        model: "claude-v1",             // Adjust model if needed
+        model: "Claude 3.7 Sonnet",             // Adjust model if needed
         max_tokens_to_sample: 300,       // Adjust token limit as required
         temperature: 0.3                 // Lower temperature for more deterministic responses
       })
