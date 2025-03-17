@@ -3,6 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
-        "node-fetch": "^2.7.0"
-    }
+        "node-fetch": "^2.6.7",
+        "@tensorflow/tfjs-node": "^3.9.0",
+        "@tensorflow-models/universal-sentence-encoder": "^2.0.2"
+      }
 }
