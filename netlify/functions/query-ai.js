@@ -30,20 +30,24 @@ function vectorize(tokens) {
 // Compute cosine similarity between two frequency vectors.
 function cosineSimilarity(vecA, vecB) {
   let dot = 0, normA = 0, normB = 0;
+
   for (const key in vecA) {
     if (vecB[key]) {
       dot += vecA[key] * vecB[key];
     }
     normA += vecA[key] * vecA[key];
   }
+
   for (const key in vecB) {
     normB += vecB[key] * vecB[key];
   }
+
   if (normA === 0 || normB === 0) return 0;
+
   return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
-// Precompute frequency vectors for each chunk (RAG setup)
+// Precompute frequency vectors for each chunk
 const chunkVectors = chunks.map(chunk => vectorize(tokenize(chunk)));
 
 exports.handler = async (event, context) => {
@@ -59,10 +63,11 @@ exports.handler = async (event, context) => {
       body: ''
     };
   }
-  
+
   try {
     const body = JSON.parse(event.body || '{}');
     const userQuery = body.user_query?.trim() || '';
+
     if (!userQuery) {
       return {
         statusCode: 400,
@@ -70,37 +75,80 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: "Missing 'user_query'" })
       };
     }
-    
+
     // Compute the query vector
     const queryVector = vectorize(tokenize(userQuery));
-    
-    // Compute cosine similarity for each chunk and select top 2 chunks
+
+    // Compute cosine similarity for each chunk
     let similarities = chunks.map((chunk, idx) => {
-      return { chunk, sim: cosineSimilarity(queryVector, chunkVectors[idx]) };
+      return {
+        chunk,
+        sim: cosineSimilarity(queryVector, chunkVectors[idx])
+      };
     });
+
     similarities.sort((a, b) => b.sim - a.sim);
-    const topChunks = similarities.slice(0, 2)
-      .map(item => item.chunk.substring(0, 300) + (item.chunk.length > 300 ? "..." : ""))
-      .join("\n\n");
-    
+
+    // Select top 5 chunks instead of only top 2, and allow more context per chunk
+    const topChunks = similarities.slice(0, 5)
+      .map(item => item.chunk.substring(0, 700) + (item.chunk.length > 700 ? '...' : ''))
+      .join('\n\n---\n\n');
+
     // Build the system prompt using the top relevant chunks
-    const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
-    
+    const systemPrompt = `
+You are ARIA, the AI Co-Founder and operating agent for Virtual AI Officer (VAIO).
+
+Your role is to help visitors understand how AI could apply to their business and how VAIO can help. You are not a generic chatbot and you should not simply repeat the knowledgebase.
+
+ARIA's personality:
+- warm, clear, practical and confident
+- thoughtful but not overly formal
+- human-centred, not hype-driven
+- commercially aware
+- focused on real business operations, workflows and outcomes
+
+How to respond:
+- Give useful insight first, then ask a helpful follow-up question.
+- Use the knowledgebase as context, but do not sound like you are quoting it.
+- Never say “based on the information available”.
+- Never say “based solely on the above information”.
+- Never refuse to help just because the user has not provided full context.
+- If more context is needed, provide a general answer first, then ask 1–2 targeted questions.
+- Keep answers concise, but not robotic.
+- Avoid excessive bullets unless they make the answer clearer.
+- Avoid generic AI hype.
+
+VAIO positioning:
+VAIO helps businesses move beyond AI experimentation and into real operational impact. VAIO acts as an embedded AI function, designing, building and running AI systems that integrate into how teams actually work.
+
+When users ask where AI could help:
+- Talk about repetitive work, analysis-heavy tasks, reporting, document review, bottlenecks, inconsistent outputs, knowledge capture, customer communication and decision support.
+- Encourage starting with one workflow that is frequent, painful, and reviewable by a human.
+
+When users ask about working with VAIO:
+- Explain discovery, prioritisation, build, embed and support.
+- Mention that VAIO works as a fractional AI capability inside the business.
+
+Relevant VAIO knowledgebase context:
+
+${topChunks}
+`;
+
     const payload = {
-      model: "claude-sonnet-4-6",
+      model: 'claude-sonnet-4-6',
       max_tokens: 1024,
-      temperature: 0.3,
+      temperature: 0.6,
       system: systemPrompt,
       messages: [
-         {
-           role: "user",
-           content: userQuery
-         }
+        {
+          role: 'user',
+          content: userQuery
+        }
       ]
     };
-    
-    console.log("Payload:", JSON.stringify(payload));
-    
+
+    console.log('Payload:', JSON.stringify(payload));
+
     // Call Anthropic's Messages API endpoint
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -111,10 +159,10 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify(payload)
     });
-    
+
     const responseText = await response.text();
-    console.log("Raw API response:", responseText);
-    
+    console.log('Raw API response:', responseText);
+
     if (!response.ok) {
       return {
         statusCode: response.status,
@@ -122,14 +170,14 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ error: responseText })
       };
     }
-    
+
     const data = JSON.parse(responseText);
-    // Extract text from the "content" array if available.
-    let completion = "";
+
+    let completion = '';
     if (data.content && Array.isArray(data.content)) {
-      completion = data.content.map(item => item.text).join(" ");
+      completion = data.content.map(item => item.text).join(' ');
     }
-    
+
     return {
       statusCode: 200,
       headers: {
@@ -138,9 +186,10 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify({ aiReply: completion })
     };
-    
+
   } catch (err) {
     console.error('Error in function:', err);
+
     return {
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
