@@ -62,6 +62,79 @@ That means balancing:
 
 Our role is to ensure AI works with your team, not instead of it.
 
+# How to Identify Where AI Can Deliver Value
+
+Most businesses don’t need “more AI” — they need to apply it in the right places.
+
+We typically look for opportunities in:
+
+* Repetitive work → tasks done frequently (reporting, drafting, admin)
+* Time-consuming analysis → reviewing documents, data, or information
+* Bottlenecks → where work slows down or depends on a few individuals
+* Inconsistent outputs → variation in quality across work
+* High-volume processes → client communications, internal workflows
+
+These areas are often where AI can deliver immediate value.
+
+# What an AI Function Looks Like in Practice
+
+An AI function is not a tool — it’s a capability embedded into how your business operates.
+
+In practice, this means:
+
+* AI supporting your team across day-to-day tasks
+* workflows that are partially or fully automated
+* consistent outputs across documents, reports and processes
+* improved decision-making through structured insights
+
+AI becomes part of your operations — not something separate or experimental.
+
+# Examples of Quick Wins with AI
+
+Some of the first areas we typically implement include:
+
+* document drafting and summarisation
+* internal reporting and commentary generation
+* workflow automation across finance, legal or operations
+* email and communication support
+* structured data extraction and analysis
+
+These are designed to:
+
+* reduce manual workload
+* improve consistency
+* deliver visible results quickly
+* What Working with VAIO Looks Like
+
+We operate as a fractional AI capability inside your business.
+
+# A typical engagement involves:
+
+## Discovery & Alignment
+* understanding your workflows
+* identifying opportunities
+* defining priorities
+## Build & Implementation
+* designing and deploying workflows and systems
+* testing and refining in real environments
+## Embed & Support
+* supporting your team in adoption
+* improving and expanding capability over time
+
+Work is prioritised continuously and delivered within an agreed capacity model.
+
+# How to Get Started
+
+The best way to begin is with a short working session.
+
+This allows us to:
+
+* understand your business context
+* identify where AI can deliver value
+* define the first steps
+
+From there, we move quickly into implementation.
+
 # About ARIA
 
 ARIA is part of the VAIO internal AI team.
