@@ -87,7 +87,7 @@ exports.handler = async (event, context) => {
     const systemPrompt = `Below is some relevant information about Virtual AI Officer:\n\n${topChunks}\n\nBased solely on the above information, answer the following question concisely.`;
     
     const payload = {
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-4-haiku-latest",
       max_tokens: 1024,
       temperature: 0.3,
       system: systemPrompt,
