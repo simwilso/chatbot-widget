@@ -1,27 +1,34 @@
 # chatbot-widget
 
-How to Update the Knowledge Base and Redeploy
-Update the Content:
-Open the knowledgebase.md file in your favorite text editor and make any changes or add new information you want to include.
+ARIA, the chat assistant on www.virtualaiofficer.com.au.
 
-Recompute the Embeddings:
-Your project uses a precomputed file (created by precompute_embeddings.py) that breaks up the knowledge base into small chunks and calculates “embeddings” (a way for the computer to understand the text).
+The website sends each question to the Netlify function at
+`/.netlify/functions/query-ai`. The function adds ARIA's instructions and the
+knowledge base, calls Claude, and returns the reply as plain text.
 
-Open your terminal in your project’s folder.
-Run the command:
-`python3 precompute_embeddings.py`
-This will update the embeddings.json file with the latest information from your updated knowledgebase.md.
-Save Your Changes:
-After updating knowledgebase.md and regenerating embeddings.json, commit your changes with Git:
-`git add knowledgebase.md embeddings.json`
-`git commit -m "Update knowledge base and embeddings"`
-Push to GitHub:
-Push your changes to your GitHub repository:
-`git push origin main`
+## How to update ARIA
 
-Netlify Rebuild:
-Once your changes are pushed, Netlify automatically picks them up, rebuilds your site, and redeploys your updated functions. You can monitor the deployment in your Netlify dashboard.
+There are two things you can change:
 
-Check the Live Site:
-Visit your website to verify that the updated knowledge base is now being used by the chatbot.
+- **What ARIA knows** (prices, packages, contact details, facts about VAIO):
+  edit `knowledgebase.md`. The whole file is sent with every question.
+- **How ARIA talks** (tone, length, rules, what to lead with): edit the
+  `SYSTEM_PROMPT` text near the top of `netlify/functions/query-ai.js`.
 
+Then commit and push:
+
+    git add knowledgebase.md netlify/functions/query-ai.js
+    git commit -m "Update ARIA"
+    git push origin main
+
+Netlify picks up the push, rebuilds and redeploys the function. Check the
+deploy in the Netlify dashboard, then ask ARIA a question on the website.
+
+## Notes
+
+- The Claude API key is the `ANTHROPIC_API_KEY` environment variable in Netlify.
+- The website can send earlier turns of the chat as `history` so ARIA can
+  follow a conversation. It is optional.
+- `embeddings.json`, `precompute_embeddings.py` and `requirements.txt` are left
+  over from an earlier version and are no longer used. There is no need to
+  recompute embeddings.

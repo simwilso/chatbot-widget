@@ -1,205 +1,105 @@
 # About Virtual AI Officer (VAIO)
 
-Virtual AI Officer (VAIO) helps businesses move beyond AI experimentation and into real operational impact.
+Virtual AI Officer (VAIO) helps small and medium businesses hand the jobs they hate to AI.
 
-We act as an embedded AI function — designing, building and running AI systems that integrate into how teams actually work.
+We come to your business, find the jobs that drain you, build an AI helper for the worst one and coach you to keep going. No tech skills needed.
 
-Our focus is simple:
-make AI practical, safe, and genuinely valuable in day-to-day operations.
+VAIO is run by Simon Wilson and is based in Gippsland, Victoria. We work on-site across Gippsland and online everywhere else in Australia.
 
-# How We Work
+# The starter package: AI for the Jobs You Hate
 
-VAIO operates as a fractional AI capability inside your business.
+Price: $1,000 + GST ($1,100 including GST). It is one fixed price and travel across Gippsland is included.
 
-We don’t deliver one-off projects or tools.
-We work alongside your team to:
+What happens, in four steps:
 
-* identify high-value opportunities
-* implement AI into workflows
-* support adoption and capability uplift
-* ensure governance, control and alignment
+1. Understand. An on-site session to learn how the business runs and the tools the owner uses to manage it.
+2. Heatmap. We map the jobs the owner hates most, and teach them how to spot what can be automated.
+3. Implement. We build an AI helper for the top job (up to 3 hours of build time), and show the owner how to build simple ones.
+4. Coach. Hands-on 1:1 coaching so the owner can run it, adjust it and keep going. Then 30 days of support.
 
-AI becomes part of how your business runs — not something separate.
+How it is delivered: two on-site sessions at the business, about 90 minutes each, with the build done off-site in between. Around 3 hours of the owner's time in total. Each business is finished within 3 weeks of the first visit. Outside Gippsland the same package is delivered online at the same price.
 
-# What We Do
+What the business takes away:
 
-We operate across three core areas:
+* One working automation for the top job, with a one-page how-to guide
+* A heatmap of the jobs they hate, showing what to automate next
+* The skills and confidence to put AI to work in their own business
 
-## 1. Strategy & Governance
+The fine print: one job per package. If the AI helper needs paid software, we agree the fee with the owner first and the owner pays it direct.
 
-We help define how AI should operate in your business, including:
+# How to get started
 
-* use case prioritisation
-* risk and policy
-* alignment with your business goals
+1. Book a 15 minute call from the website. Tell us about your business and the job you hate. We will say straight up whether AI can take it.
+2. If it is a fit, we send one invoice for $1,000 + GST.
+3. We lock in the first visit.
 
-## 2. Workflows & Agents
+Book a call: use the "Book a call" button on www.virtualaiofficer.com.au
+Phone: Simon Wilson on 0428 559 299
+Email: simon@virtualaiofficer.com.au
+Package details: www.virtualaiofficer.com.au/ai-for-the-jobs-you-hate
 
-We design and implement AI systems that:
+# Jobs small businesses often hand to AI
 
-* support drafting, analysis and decision-making
-* automate repeatable processes
-* extend your team’s capability
+These are the kinds of jobs owners commonly want off their plate:
 
-## 3. Systems & Applications
+* Writing quotes
+* Chasing overdue invoices
+* Answering the same emails over and over
+* Rosters and bookings
+* Social media posts
+* Compliance paperwork
+* Data entry
+* Meeting notes and follow-ups
 
-Where needed, we build more advanced AI solutions:
+Good first jobs are ones that happen often, are painful, follow a pattern, and can be checked by a person before anything goes out. Whether a specific job can be automated depends on the tools the business uses, which is what the 15 minute call and the first visit work out.
 
-* integrated tools and platforms
-* edge and offline AI systems
-* tailored operational applications
+# Do I need to be good with tech?
 
-# What Makes VAIO Different
+No. If you can send an email you can do this. The coaching is 1:1 and goes at the owner's pace.
 
-We don’t treat AI as a tool or a project.
-We treat it as a new operating layer for business.
+# Are there ongoing costs?
 
-That means balancing:
+Only if the AI helper needs a paid tool. Any software fee is agreed with the owner before we build, and the owner pays it direct. The package itself is a one-off $1,000 + GST.
 
-* speed with structure
-* innovation with governance
-* automation with human judgement
+# Using AI safely
 
-Our role is to ensure AI works with your team, not instead of it.
+General good practice for a small business: keep a person in the loop, so someone reviews what the AI produces before it goes to a customer. Decide up front what information goes into AI tools and what stays out. Start with a low-risk job where mistakes are easy to spot and fix. For a growing team, VAIO sets simple rules so AI is used safely.
 
-# How to Identify Where AI Can Deliver Value
+# When one job is not enough: your own fractional AI officer
 
-Most businesses don’t need “more AI” — they need to apply it in the right places.
+For growing teams with more jobs to hand over, VAIO stays on as part of the business and takes responsibility for the outcomes, month to month. AI agents become teammates, set up around each person and how they actually work.
 
-We typically look for opportunities in:
+This covers:
 
-* Repetitive work → tasks done frequently (reporting, drafting, admin)
-* Time-consuming analysis → reviewing documents, data, or information
-* Bottlenecks → where work slows down or depends on a few individuals
-* Inconsistent outputs → variation in quality across work
-* High-volume processes → client communications, internal workflows
+* Strategy and guardrails: where AI fits, what to do first, and simple rules so it is used safely
+* Team coaching: hands-on coaching for your people, built around the work they do every day
+* Workflows and agents: we design, build and run the AI helpers that become part of how you operate
 
-These areas are often where AI can deliver immediate value.
+Retainer pricing depends on the business. The way to find out is to book a call.
 
-# What an AI Function Looks Like in Practice
+# About Simon Wilson
 
-An AI function is not a tool — it’s a capability embedded into how your business operates.
+Simon Wilson lives in Sale, Gippsland and has more than 20 years in software development and ICT architecture.
 
-In practice, this means:
+* Has worked with 250+ small and medium businesses
+* Established and led the Australian Regional AI Network
+* Led a Monash University platform that won a UN innovation award at COP24
+* Sits on the AI Advisory Board of the Murdoch Children's Research Institute
+* Runs his own small business with a team of 19 AI agents doing the admin, marketing, bookings and ops
 
-* AI supporting your team across day-to-day tasks
-* workflows that are partially or fully automated
-* consistent outputs across documents, reports and processes
-* improved decision-making through structured insights
+VAIO is a partner of NVIDIA, Anthropic and Google Cloud, and is technology agnostic.
 
-AI becomes part of your operations — not something separate or experimental.
+# Case studies
 
-# Examples of Quick Wins with AI
+Two case studies are on the website at www.virtualaiofficer.com.au/case-studies
 
-Some of the first areas we typically implement include:
-
-* document drafting and summarisation
-* internal reporting and commentary generation
-* workflow automation across finance, legal or operations
-* email and communication support
-* structured data extraction and analysis
-
-These are designed to:
-
-* reduce manual workload
-* improve consistency
-* deliver visible results quickly
-* What Working with VAIO Looks Like
-
-We operate as a fractional AI capability inside your business.
-
-# A typical engagement involves:
-
-## Discovery & Alignment
-* understanding your workflows
-* identifying opportunities
-* defining priorities
-## Build & Implementation
-* designing and deploying workflows and systems
-* testing and refining in real environments
-## Embed & Support
-* supporting your team in adoption
-* improving and expanding capability over time
-
-Work is prioritised continuously and delivered within an agreed capacity model.
-
-# How to Get Started
-
-The best way to begin is with a short working session.
-
-This allows us to:
-
-* understand your business context
-* identify where AI can deliver value
-* define the first steps
-
-From there, we move quickly into implementation.
+* An accounting firm: five client inboxes under automated triage, vendor reconciliation without the spreadsheets, and a daily AI briefing the team trusts.
+* A legal practice: around one hundred contracts through structured AI review at three to four hours saved each, plus an automated risk report pipeline.
 
 # About ARIA
 
-ARIA is part of the VAIO internal AI team.
-
-She represents the same model we deploy for our clients — an AI system designed to:
-
-* assist with thinking and exploration
-* provide structured insights
-* help identify opportunities for AI in your business
-
-ARIA is not a replacement for human expertise.
-She works alongside you to help clarify ideas and move things forward.
+ARIA is one of the AI agents on VAIO's own team. She helps visitors work out whether AI could take a job off their plate and explains how VAIO works. She is not a replacement for a conversation with Simon, and she cannot book calls, take payments or see a visitor's systems.
 
 # Intelligent Acres
 
-VAIO is closely aligned with Intelligent Acres — a complementary initiative focused on:
-
-* digital twins and physical system modelling
-* AI-enabled simulation environments
-* understanding and optimising real-world systems
-
-Where VAIO embeds AI into business operations,
-Intelligent Acres extends this into physical and environmental systems.
-
-Together, they represent a broader vision:
-
-using AI to understand, simulate and improve both digital and real-world operations.
-
-# What AI Means for Your Business
-
-AI is not just about automation.
-
-It enables:
-
-* faster and better decision-making
-* reduced manual workload
-* more consistent outputs
-* new ways of operating
-
-The biggest shift is not the technology —
-it’s how work is structured and delivered.
-
-# Typical Use Cases
-
-Examples of where we apply AI:
-
-* document and contract analysis
-* accounting and reporting workflows
-* internal automation and task coordination
-* customer communication and support
-* operational decision support
-
-# How to Engage with VAIO
-
-The best way to get started is with a working session.
-
-We’ll:
-
-* understand your business
-* identify opportunities
-* define where AI can deliver real value
-
-From there, we embed and build iteratively.
-
-**Contact Us**
-Contact us via our website: www.virtualaiofficer.com.au
-Book a Meeting from our website
-Reach out through our linkedIn
+VAIO's sister business, Intelligent Acres, builds digital twins: living models of a business or region used to test decisions before they are made in the real world. Website: www.intelligentacres.com
